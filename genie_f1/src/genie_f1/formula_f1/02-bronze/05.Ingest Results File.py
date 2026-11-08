@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # Ingest results.json file
 # MAGIC 1. Read the all the files from the results folder using spark dataframe reader API

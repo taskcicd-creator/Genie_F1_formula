@@ -12,8 +12,8 @@
 
 -- COMMAND ----------
 
-CREATE SCHEMA IF NOT EXISTS formula1.control
-    MANAGED LOCATION 'abfss://landing@work12cicd.dfs.core.windows.net/landing/control';
+CREATE SCHEMA IF NOT EXISTS formula1_incr.control
+    --MANAGED LOCATION 'abfss://landing@work12cicd.dfs.core.windows.net/landing/control';
 
 -- COMMAND ----------
 
@@ -22,7 +22,7 @@ CREATE SCHEMA IF NOT EXISTS formula1.control
 
 -- COMMAND ----------
 
-CREATE TABLE IF NOT EXISTS formula1.control.batch_events
+CREATE TABLE IF NOT EXISTS formula1_incr.control.batch_events
 (
     batch_id INT,
     event_timestamp TIMESTAMP
@@ -35,14 +35,14 @@ CREATE TABLE IF NOT EXISTS formula1.control.batch_events
 
 -- COMMAND ----------
 
-INSERT INTO formula1.control.batch_events
+INSERT INTO formula1_incr.control.batch_events
 VALUES (1, current_timestamp());
 
 -- COMMAND ----------
 
-INSERT INTO formula1.control.batch_events
+INSERT INTO formula1_incr.control.batch_events
 VALUES (2, current_timestamp());
 
 -- COMMAND ----------
 
-SELECT * FROM formula1.control.batch_events;
+SELECT * FROM formula1_incr.control.batch_events;

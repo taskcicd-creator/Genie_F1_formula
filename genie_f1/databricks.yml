@@ -28,14 +28,14 @@ targets:
     mode: development
     default: true
     workspace:
-      host: http://127.0.0.1:7073
+      host: https://adb-7405611203658230.10.azuredatabricks.net
     variables:
       catalog: yes
       schema: ${workspace.current_user.short_name}
   prod:
     mode: production
     workspace:
-      host: http://127.0.0.1:7073
+      host: https://adb-7405608037100953.13.azuredatabricks.net
       # We explicitly deploy to /Workspace/Users/taskcicd@gmail.com to make sure we only have a single copy.
       root_path: /Workspace/Users/taskcicd@gmail.com/.bundle/${bundle.name}/${bundle.target}
     variables:

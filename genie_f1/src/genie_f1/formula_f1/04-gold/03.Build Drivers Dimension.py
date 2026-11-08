@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # Build Drivers Dimension
 # MAGIC
@@ -67,7 +71,15 @@ drivers_df = (
 
 # COMMAND ----------
 
+display(drivers_df)
+
+# COMMAND ----------
+
 ref_nationality_region_df = spark.table(f"{catalog_name}.{gold_schema}.ref_nationality_region")
+
+# COMMAND ----------
+
+display(ref_nationality_region_df)
 
 # COMMAND ----------
 
