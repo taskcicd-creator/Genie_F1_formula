@@ -1,0 +1,70 @@
+version: 1.1
+
+source: formula1_incr.gold.fact_session_results
+
+joins:
+  - name: drivers
+    source: formula1_incr.gold.dim_drivers
+    "on": source.driver_id = drivers.driver_id
+    rely:
+      at_most_one_match: true
+    cardinality: many_to_one
+
+comment: Driver win metrics from session results. Rank drivers by race_wins (or total_wins)
+  to find who has achieved the most wins.
+
+dimensions:
+  - name: driver_id
+    expr: source.driver_id
+
+  - name: driver_name
+    expr: drivers.driver_name
+    synonyms:
+      - driver
+
+  - name: nationality
+    expr: drivers.nationality
+
+  - name: nationality_region
+    expr: drivers.nationality_region
+
+  - name: season
+    expr: source.season
+    synonyms:
+      - year
+
+  - name: session_type
+    expr: source.session_type
+    comment: "Session type of the result (e.g. RACE, SPRINT)."
+
+measures:
+  - name: race_wins
+    expr: COUNT_IF(source.is_win) FILTER (WHERE source.session_type = 'RACE')
+    comment: Number of Grand Prix race wins (session_type = 'RACE'); excludes sprint
+      wins.
+    synonyms:
+      - grand prix wins
+      - victories
+
+  - name: sprint_wins
+    expr: COUNT_IF(source.is_win) FILTER (WHERE source.session_type = 'SPRINT')
+    comment: Number of sprint session wins.
+
+  - name: total_wins
+    expr: COUNT_IF(source.is_win)
+    comment: Wins across all session types (race and sprint).
+    synonyms:
+      - wins
+
+  - name: sessions_started
+    expr: COUNT(*)
+    comment: Number of session result rows for the driver.
+
+  - name: win_rate
+    expr: MEASURE(total_wins) / MEASURE(sessions_started)
+    comment: Share of sessions won across all session types.
+    format:
+      type: percentage
+      decimal_places:
+        type: exact
+        places: 1
